@@ -7,14 +7,10 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() async => await RustLib.init());
   test('Facet test', () async {
-    final schemaBuilder = SchemaBuilder();
-    schemaBuilder.addFacetField(name: "color");
-    final schema = schemaBuilder.build();
     final facet = Facet.fromString(facetString: "/color/yellow");
 
-    debugPrint(facet.toPathStr());
-
     expect(facet.toPathStr(), "/color/yellow");
+    expect(facet.toPath(), ["color", "yellow"]);
 
     expect(facet.isRoot(), false);
     expect(
