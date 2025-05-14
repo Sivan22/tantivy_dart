@@ -11,9 +11,9 @@ void main() {
     schemaBuilder.addTextField(
       name: "title",
       stored: true,
-      fast: false,
-      indexOption: "positions",
+      fast: true,
       tokenizerName: "default",
+      indexOption: "position",
     );
     schemaBuilder.addIntegerField(
       name: "price",
