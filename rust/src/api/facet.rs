@@ -34,6 +34,7 @@ impl Facet {
     }
 
     /// Returns true if another Facet is a subfacet of this facet.
+    /// 
     /// Args:
     ///     other (Facet): The Facet that we should check if this facet is a
     ///         subset of.
@@ -61,7 +62,7 @@ impl Facet {
         self.inner.to_path().into_iter().map(String::from).collect()
     }
 
-        /// Returns the facet string representation.
+    /// Returns the facet string representation.
     #[frb(sync)]
     pub fn to_path_str(&self) -> String {
         self.inner.to_string()

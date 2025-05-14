@@ -1429,6 +1429,7 @@ class FacetImpl extends RustOpaque implements Facet {
   );
 
   /// Returns true if another Facet is a subfacet of this facet.
+  ///
   /// Args:
   ///     other (Facet): The Facet that we should check if this facet is a
   ///         subset of.

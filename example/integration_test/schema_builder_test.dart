@@ -6,7 +6,7 @@ import 'package:tantivy_dart/tantivy_dart.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() async => await RustLib.init());
-  test('Can call rust function', () async {
+  test('test schema builder', () async {
     final schemaBuilder = SchemaBuilder();
     schemaBuilder.addTextField(
       name: "title",
@@ -21,6 +21,7 @@ void main() {
       fast: false,
       indexed: true,
     );
+    schemaBuilder.addFacetField(name: "category");
     final schema = schemaBuilder.build();
 
     debugPrint(schema.toString());
