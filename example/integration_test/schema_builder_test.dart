@@ -7,11 +7,12 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() async => await RustLib.init());
   test('Can call rust function', () async {
-    final schemaBuilder = MySchemaBuilder();
+    final schemaBuilder = SchemaBuilder();
     schemaBuilder.addTextField(
       name: "title",
       stored: true,
-      indexOption: IndexRecordOption.withFreqsAndPositions,
+      fast: false,
+      indexOption: "positions",
       tokenizerName: "default",
     );
     schemaBuilder.addIntegerField(
@@ -21,8 +22,6 @@ void main() {
       indexed: true,
     );
     final schema = schemaBuilder.build();
-
-    final index = MyIndex(schema: schema, path: "./index");
 
     debugPrint(schema.toString());
   });

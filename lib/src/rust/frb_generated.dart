@@ -3,7 +3,8 @@
 
 // ignore_for_file: unused_import, unused_element, unnecessary_import, duplicate_ignore, invalid_use_of_internal_member, annotate_overrides, non_constant_identifier_names, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, unused_field
 
-import 'api/simple.dart';
+import 'api/schema.dart';
+import 'api/schemabuilder.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'frb_generated.dart';
@@ -52,9 +53,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
       RustLibWire.fromExternalLibrary;
 
   @override
-  Future<void> executeRustInitializers() async {
-    await api.crateApiSimpleInitApp();
-  }
+  Future<void> executeRustInitializers() async {}
 
   @override
   ExternalLibraryLoaderConfig get defaultExternalLibraryLoaderConfig =>
@@ -64,7 +63,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.9.0';
 
   @override
-  int get rustContentHash => 282129035;
+  int get rustContentHash => 302688980;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -75,109 +74,92 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
 }
 
 abstract class RustLibApi extends BaseApi {
-  Future<Searcher> crateApiSimpleIndexReaderSearcher({
-    required IndexReader that,
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddBooleanField({
+    required SchemaBuilder that,
+    required String name,
+    required bool stored,
+    required bool indexed,
+    required bool fast,
   });
 
-  Future<Opstamp> crateApiSimpleIndexWriterAddDocument({
-    required IndexWriter that,
-    required TantivyDocument document,
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddBytesField({
+    required SchemaBuilder that,
+    required String name,
+    required bool stored,
+    required bool indexed,
+    required bool fast,
   });
 
-  MyIndex crateApiSimpleMyIndexNew({
-    required Schema schema,
-    required String path,
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddDateField({
+    required SchemaBuilder that,
+    required String name,
+    required bool stored,
+    required bool indexed,
+    required bool fast,
   });
 
-  IndexReader crateApiSimpleMyIndexReader({required MyIndex that});
-
-  IndexWriter crateApiSimpleMyIndexWriter({
-    required MyIndex that,
-    required BigInt heapSize,
-    required BigInt numThreads,
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddFacetField({
+    required SchemaBuilder that,
+    required String name,
   });
 
-  Future<void> crateApiSimpleMySchemaBuilderAddBoolField({
-    required MySchemaBuilder that,
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddFloatField({
+    required SchemaBuilder that,
+    required String name,
+    required bool stored,
+    required bool indexed,
+    required bool fast,
+  });
+
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddIntegerField({
+    required SchemaBuilder that,
+    required String name,
+    required bool stored,
+    required bool indexed,
+    required bool fast,
+  });
+
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddIpAddrField({
+    required SchemaBuilder that,
+    required String name,
+    required bool stored,
+    required bool indexed,
+    required bool fast,
+  });
+
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddJsonField({
+    required SchemaBuilder that,
     required String name,
     required bool stored,
     required bool fast,
-    required bool indexed,
-  });
-
-  Future<void> crateApiSimpleMySchemaBuilderAddFacetField({
-    required MySchemaBuilder that,
-    required String name,
-  });
-
-  Future<void> crateApiSimpleMySchemaBuilderAddFloatField({
-    required MySchemaBuilder that,
-    required String name,
-    required bool stored,
-    required bool fast,
-    required bool indexed,
-  });
-
-  Future<void> crateApiSimpleMySchemaBuilderAddIntegerField({
-    required MySchemaBuilder that,
-    required String name,
-    required bool stored,
-    required bool fast,
-    required bool indexed,
-  });
-
-  Future<void> crateApiSimpleMySchemaBuilderAddTextField({
-    required MySchemaBuilder that,
-    required String name,
-    required bool stored,
-    required IndexRecordOption indexOption,
     required String tokenizerName,
+    required String indexOption,
   });
 
-  Schema crateApiSimpleMySchemaBuilderBuild({required MySchemaBuilder that});
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddTextField({
+    required SchemaBuilder that,
+    required String name,
+    required bool stored,
+    required bool fast,
+    required String tokenizerName,
+    required String indexOption,
+  });
 
-  MySchemaBuilder crateApiSimpleMySchemaBuilderNew();
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddUnsignedField({
+    required SchemaBuilder that,
+    required String name,
+    required bool stored,
+    required bool indexed,
+    required bool fast,
+  });
 
-  String crateApiSimpleGreet({required String name});
+  Schema crateApiSchemabuilderSchemaBuilderBuild({required SchemaBuilder that});
 
-  Future<void> crateApiSimpleInitApp();
+  bool crateApiSchemabuilderSchemaBuilderIsValidFieldName({
+    required String name,
+  });
 
-  RustArcIncrementStrongCountFnType
-  get rust_arc_increment_strong_count_IndexReader;
-
-  RustArcDecrementStrongCountFnType
-  get rust_arc_decrement_strong_count_IndexReader;
-
-  CrossPlatformFinalizerArg get rust_arc_decrement_strong_count_IndexReaderPtr;
-
-  RustArcIncrementStrongCountFnType
-  get rust_arc_increment_strong_count_IndexWriter;
-
-  RustArcDecrementStrongCountFnType
-  get rust_arc_decrement_strong_count_IndexWriter;
-
-  CrossPlatformFinalizerArg get rust_arc_decrement_strong_count_IndexWriterPtr;
-
-  RustArcIncrementStrongCountFnType get rust_arc_increment_strong_count_MyIndex;
-
-  RustArcDecrementStrongCountFnType get rust_arc_decrement_strong_count_MyIndex;
-
-  CrossPlatformFinalizerArg get rust_arc_decrement_strong_count_MyIndexPtr;
-
-  RustArcIncrementStrongCountFnType
-  get rust_arc_increment_strong_count_MySchemaBuilder;
-
-  RustArcDecrementStrongCountFnType
-  get rust_arc_decrement_strong_count_MySchemaBuilder;
-
-  CrossPlatformFinalizerArg
-  get rust_arc_decrement_strong_count_MySchemaBuilderPtr;
-
-  RustArcIncrementStrongCountFnType get rust_arc_increment_strong_count_Opstamp;
-
-  RustArcDecrementStrongCountFnType get rust_arc_decrement_strong_count_Opstamp;
-
-  CrossPlatformFinalizerArg get rust_arc_decrement_strong_count_OpstampPtr;
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderNew();
 
   RustArcIncrementStrongCountFnType get rust_arc_increment_strong_count_Schema;
 
@@ -186,21 +168,21 @@ abstract class RustLibApi extends BaseApi {
   CrossPlatformFinalizerArg get rust_arc_decrement_strong_count_SchemaPtr;
 
   RustArcIncrementStrongCountFnType
-  get rust_arc_increment_strong_count_Searcher;
+  get rust_arc_increment_strong_count_SchemaBuilder;
 
   RustArcDecrementStrongCountFnType
-  get rust_arc_decrement_strong_count_Searcher;
-
-  CrossPlatformFinalizerArg get rust_arc_decrement_strong_count_SearcherPtr;
-
-  RustArcIncrementStrongCountFnType
-  get rust_arc_increment_strong_count_TantivyDocument;
-
-  RustArcDecrementStrongCountFnType
-  get rust_arc_decrement_strong_count_TantivyDocument;
+  get rust_arc_decrement_strong_count_SchemaBuilder;
 
   CrossPlatformFinalizerArg
-  get rust_arc_decrement_strong_count_TantivyDocumentPtr;
+  get rust_arc_decrement_strong_count_SchemaBuilderPtr;
+
+  RustArcIncrementStrongCountFnType
+  get rust_arc_increment_strong_count_TantivyError;
+
+  RustArcDecrementStrongCountFnType
+  get rust_arc_decrement_strong_count_TantivyError;
+
+  CrossPlatformFinalizerArg get rust_arc_decrement_strong_count_TantivyErrorPtr;
 }
 
 class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
@@ -212,401 +194,440 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   });
 
   @override
-  Future<Searcher> crateApiSimpleIndexReaderSearcher({
-    required IndexReader that,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexReader(
-            that,
-            serializer,
-          );
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 1,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData:
-              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSearcher,
-          decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiSimpleIndexReaderSearcherConstMeta,
-        argValues: [that],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateApiSimpleIndexReaderSearcherConstMeta =>
-      const TaskConstMeta(
-        debugName: "IndexReader_searcher",
-        argNames: ["that"],
-      );
-
-  @override
-  Future<Opstamp> crateApiSimpleIndexWriterAddDocument({
-    required IndexWriter that,
-    required TantivyDocument document,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexWriter(
-            that,
-            serializer,
-          );
-          sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyDocument(
-            document,
-            serializer,
-          );
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 2,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData:
-              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOpstamp,
-          decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiSimpleIndexWriterAddDocumentConstMeta,
-        argValues: [that, document],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateApiSimpleIndexWriterAddDocumentConstMeta =>
-      const TaskConstMeta(
-        debugName: "IndexWriter_add_document",
-        argNames: ["that", "document"],
-      );
-
-  @override
-  MyIndex crateApiSimpleMyIndexNew({
-    required Schema schema,
-    required String path,
-  }) {
-    return handler.executeSync(
-      SyncTask(
-        callFfi: () {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchema(
-            schema,
-            serializer,
-          );
-          sse_encode_String(path, serializer);
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 3)!;
-        },
-        codec: SseCodec(
-          decodeSuccessData:
-              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMyIndex,
-          decodeErrorData: null,
-        ),
-        constMeta: kCrateApiSimpleMyIndexNewConstMeta,
-        argValues: [schema, path],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateApiSimpleMyIndexNewConstMeta => const TaskConstMeta(
-    debugName: "MyIndex_new",
-    argNames: ["schema", "path"],
-  );
-
-  @override
-  IndexReader crateApiSimpleMyIndexReader({required MyIndex that}) {
-    return handler.executeSync(
-      SyncTask(
-        callFfi: () {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMyIndex(
-            that,
-            serializer,
-          );
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 4)!;
-        },
-        codec: SseCodec(
-          decodeSuccessData:
-              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexReader,
-          decodeErrorData: null,
-        ),
-        constMeta: kCrateApiSimpleMyIndexReaderConstMeta,
-        argValues: [that],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateApiSimpleMyIndexReaderConstMeta =>
-      const TaskConstMeta(debugName: "MyIndex_reader", argNames: ["that"]);
-
-  @override
-  IndexWriter crateApiSimpleMyIndexWriter({
-    required MyIndex that,
-    required BigInt heapSize,
-    required BigInt numThreads,
-  }) {
-    return handler.executeSync(
-      SyncTask(
-        callFfi: () {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMyIndex(
-            that,
-            serializer,
-          );
-          sse_encode_usize(heapSize, serializer);
-          sse_encode_usize(numThreads, serializer);
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 5)!;
-        },
-        codec: SseCodec(
-          decodeSuccessData:
-              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexWriter,
-          decodeErrorData: null,
-        ),
-        constMeta: kCrateApiSimpleMyIndexWriterConstMeta,
-        argValues: [that, heapSize, numThreads],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateApiSimpleMyIndexWriterConstMeta =>
-      const TaskConstMeta(
-        debugName: "MyIndex_writer",
-        argNames: ["that", "heapSize", "numThreads"],
-      );
-
-  @override
-  Future<void> crateApiSimpleMySchemaBuilderAddBoolField({
-    required MySchemaBuilder that,
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddBooleanField({
+    required SchemaBuilder that,
     required String name,
     required bool stored,
-    required bool fast,
     required bool indexed,
+    required bool fast,
   }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
           final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder(
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
             that,
             serializer,
           );
           sse_encode_String(name, serializer);
           sse_encode_bool(stored, serializer);
-          sse_encode_bool(fast, serializer);
           sse_encode_bool(indexed, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 6,
-            port: port_,
-          );
+          sse_encode_bool(fast, serializer);
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 1)!;
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
+          decodeSuccessData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder,
+          decodeErrorData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError,
         ),
-        constMeta: kCrateApiSimpleMySchemaBuilderAddBoolFieldConstMeta,
-        argValues: [that, name, stored, fast, indexed],
+        constMeta: kCrateApiSchemabuilderSchemaBuilderAddBooleanFieldConstMeta,
+        argValues: [that, name, stored, indexed, fast],
         apiImpl: this,
       ),
     );
   }
 
-  TaskConstMeta get kCrateApiSimpleMySchemaBuilderAddBoolFieldConstMeta =>
+  TaskConstMeta
+  get kCrateApiSchemabuilderSchemaBuilderAddBooleanFieldConstMeta =>
       const TaskConstMeta(
-        debugName: "MySchemaBuilder_add_bool_field",
-        argNames: ["that", "name", "stored", "fast", "indexed"],
+        debugName: "SchemaBuilder_add_boolean_field",
+        argNames: ["that", "name", "stored", "indexed", "fast"],
       );
 
   @override
-  Future<void> crateApiSimpleMySchemaBuilderAddFacetField({
-    required MySchemaBuilder that,
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddBytesField({
+    required SchemaBuilder that,
     required String name,
+    required bool stored,
+    required bool indexed,
+    required bool fast,
   }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
           final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder(
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
             that,
             serializer,
           );
           sse_encode_String(name, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 7,
-            port: port_,
-          );
+          sse_encode_bool(stored, serializer);
+          sse_encode_bool(indexed, serializer);
+          sse_encode_bool(fast, serializer);
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 2)!;
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
+          decodeSuccessData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder,
+          decodeErrorData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError,
         ),
-        constMeta: kCrateApiSimpleMySchemaBuilderAddFacetFieldConstMeta,
+        constMeta: kCrateApiSchemabuilderSchemaBuilderAddBytesFieldConstMeta,
+        argValues: [that, name, stored, indexed, fast],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiSchemabuilderSchemaBuilderAddBytesFieldConstMeta =>
+      const TaskConstMeta(
+        debugName: "SchemaBuilder_add_bytes_field",
+        argNames: ["that", "name", "stored", "indexed", "fast"],
+      );
+
+  @override
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddDateField({
+    required SchemaBuilder that,
+    required String name,
+    required bool stored,
+    required bool indexed,
+    required bool fast,
+  }) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
+            that,
+            serializer,
+          );
+          sse_encode_String(name, serializer);
+          sse_encode_bool(stored, serializer);
+          sse_encode_bool(indexed, serializer);
+          sse_encode_bool(fast, serializer);
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 3)!;
+        },
+        codec: SseCodec(
+          decodeSuccessData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder,
+          decodeErrorData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError,
+        ),
+        constMeta: kCrateApiSchemabuilderSchemaBuilderAddDateFieldConstMeta,
+        argValues: [that, name, stored, indexed, fast],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiSchemabuilderSchemaBuilderAddDateFieldConstMeta =>
+      const TaskConstMeta(
+        debugName: "SchemaBuilder_add_date_field",
+        argNames: ["that", "name", "stored", "indexed", "fast"],
+      );
+
+  @override
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddFacetField({
+    required SchemaBuilder that,
+    required String name,
+  }) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
+            that,
+            serializer,
+          );
+          sse_encode_String(name, serializer);
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 4)!;
+        },
+        codec: SseCodec(
+          decodeSuccessData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder,
+          decodeErrorData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError,
+        ),
+        constMeta: kCrateApiSchemabuilderSchemaBuilderAddFacetFieldConstMeta,
         argValues: [that, name],
         apiImpl: this,
       ),
     );
   }
 
-  TaskConstMeta get kCrateApiSimpleMySchemaBuilderAddFacetFieldConstMeta =>
+  TaskConstMeta get kCrateApiSchemabuilderSchemaBuilderAddFacetFieldConstMeta =>
       const TaskConstMeta(
-        debugName: "MySchemaBuilder_add_facet_field",
+        debugName: "SchemaBuilder_add_facet_field",
         argNames: ["that", "name"],
       );
 
   @override
-  Future<void> crateApiSimpleMySchemaBuilderAddFloatField({
-    required MySchemaBuilder that,
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddFloatField({
+    required SchemaBuilder that,
     required String name,
     required bool stored,
-    required bool fast,
     required bool indexed,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder(
-            that,
-            serializer,
-          );
-          sse_encode_String(name, serializer);
-          sse_encode_bool(stored, serializer);
-          sse_encode_bool(fast, serializer);
-          sse_encode_bool(indexed, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 8,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
-        ),
-        constMeta: kCrateApiSimpleMySchemaBuilderAddFloatFieldConstMeta,
-        argValues: [that, name, stored, fast, indexed],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateApiSimpleMySchemaBuilderAddFloatFieldConstMeta =>
-      const TaskConstMeta(
-        debugName: "MySchemaBuilder_add_float_field",
-        argNames: ["that", "name", "stored", "fast", "indexed"],
-      );
-
-  @override
-  Future<void> crateApiSimpleMySchemaBuilderAddIntegerField({
-    required MySchemaBuilder that,
-    required String name,
-    required bool stored,
     required bool fast,
-    required bool indexed,
   }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder(
-            that,
-            serializer,
-          );
-          sse_encode_String(name, serializer);
-          sse_encode_bool(stored, serializer);
-          sse_encode_bool(fast, serializer);
-          sse_encode_bool(indexed, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 9,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
-        ),
-        constMeta: kCrateApiSimpleMySchemaBuilderAddIntegerFieldConstMeta,
-        argValues: [that, name, stored, fast, indexed],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateApiSimpleMySchemaBuilderAddIntegerFieldConstMeta =>
-      const TaskConstMeta(
-        debugName: "MySchemaBuilder_add_integer_field",
-        argNames: ["that", "name", "stored", "fast", "indexed"],
-      );
-
-  @override
-  Future<void> crateApiSimpleMySchemaBuilderAddTextField({
-    required MySchemaBuilder that,
-    required String name,
-    required bool stored,
-    required IndexRecordOption indexOption,
-    required String tokenizerName,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder(
-            that,
-            serializer,
-          );
-          sse_encode_String(name, serializer);
-          sse_encode_bool(stored, serializer);
-          sse_encode_index_record_option(indexOption, serializer);
-          sse_encode_String(tokenizerName, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 10,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
-        ),
-        constMeta: kCrateApiSimpleMySchemaBuilderAddTextFieldConstMeta,
-        argValues: [that, name, stored, indexOption, tokenizerName],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateApiSimpleMySchemaBuilderAddTextFieldConstMeta =>
-      const TaskConstMeta(
-        debugName: "MySchemaBuilder_add_text_field",
-        argNames: ["that", "name", "stored", "indexOption", "tokenizerName"],
-      );
-
-  @override
-  Schema crateApiSimpleMySchemaBuilderBuild({required MySchemaBuilder that}) {
     return handler.executeSync(
       SyncTask(
         callFfi: () {
           final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder(
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
+            that,
+            serializer,
+          );
+          sse_encode_String(name, serializer);
+          sse_encode_bool(stored, serializer);
+          sse_encode_bool(indexed, serializer);
+          sse_encode_bool(fast, serializer);
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 5)!;
+        },
+        codec: SseCodec(
+          decodeSuccessData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder,
+          decodeErrorData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError,
+        ),
+        constMeta: kCrateApiSchemabuilderSchemaBuilderAddFloatFieldConstMeta,
+        argValues: [that, name, stored, indexed, fast],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiSchemabuilderSchemaBuilderAddFloatFieldConstMeta =>
+      const TaskConstMeta(
+        debugName: "SchemaBuilder_add_float_field",
+        argNames: ["that", "name", "stored", "indexed", "fast"],
+      );
+
+  @override
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddIntegerField({
+    required SchemaBuilder that,
+    required String name,
+    required bool stored,
+    required bool indexed,
+    required bool fast,
+  }) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
+            that,
+            serializer,
+          );
+          sse_encode_String(name, serializer);
+          sse_encode_bool(stored, serializer);
+          sse_encode_bool(indexed, serializer);
+          sse_encode_bool(fast, serializer);
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 6)!;
+        },
+        codec: SseCodec(
+          decodeSuccessData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder,
+          decodeErrorData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError,
+        ),
+        constMeta: kCrateApiSchemabuilderSchemaBuilderAddIntegerFieldConstMeta,
+        argValues: [that, name, stored, indexed, fast],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta
+  get kCrateApiSchemabuilderSchemaBuilderAddIntegerFieldConstMeta =>
+      const TaskConstMeta(
+        debugName: "SchemaBuilder_add_integer_field",
+        argNames: ["that", "name", "stored", "indexed", "fast"],
+      );
+
+  @override
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddIpAddrField({
+    required SchemaBuilder that,
+    required String name,
+    required bool stored,
+    required bool indexed,
+    required bool fast,
+  }) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
+            that,
+            serializer,
+          );
+          sse_encode_String(name, serializer);
+          sse_encode_bool(stored, serializer);
+          sse_encode_bool(indexed, serializer);
+          sse_encode_bool(fast, serializer);
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 7)!;
+        },
+        codec: SseCodec(
+          decodeSuccessData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder,
+          decodeErrorData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError,
+        ),
+        constMeta: kCrateApiSchemabuilderSchemaBuilderAddIpAddrFieldConstMeta,
+        argValues: [that, name, stored, indexed, fast],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta
+  get kCrateApiSchemabuilderSchemaBuilderAddIpAddrFieldConstMeta =>
+      const TaskConstMeta(
+        debugName: "SchemaBuilder_add_ip_addr_field",
+        argNames: ["that", "name", "stored", "indexed", "fast"],
+      );
+
+  @override
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddJsonField({
+    required SchemaBuilder that,
+    required String name,
+    required bool stored,
+    required bool fast,
+    required String tokenizerName,
+    required String indexOption,
+  }) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
+            that,
+            serializer,
+          );
+          sse_encode_String(name, serializer);
+          sse_encode_bool(stored, serializer);
+          sse_encode_bool(fast, serializer);
+          sse_encode_String(tokenizerName, serializer);
+          sse_encode_String(indexOption, serializer);
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 8)!;
+        },
+        codec: SseCodec(
+          decodeSuccessData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder,
+          decodeErrorData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError,
+        ),
+        constMeta: kCrateApiSchemabuilderSchemaBuilderAddJsonFieldConstMeta,
+        argValues: [that, name, stored, fast, tokenizerName, indexOption],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiSchemabuilderSchemaBuilderAddJsonFieldConstMeta =>
+      const TaskConstMeta(
+        debugName: "SchemaBuilder_add_json_field",
+        argNames: [
+          "that",
+          "name",
+          "stored",
+          "fast",
+          "tokenizerName",
+          "indexOption",
+        ],
+      );
+
+  @override
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddTextField({
+    required SchemaBuilder that,
+    required String name,
+    required bool stored,
+    required bool fast,
+    required String tokenizerName,
+    required String indexOption,
+  }) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
+            that,
+            serializer,
+          );
+          sse_encode_String(name, serializer);
+          sse_encode_bool(stored, serializer);
+          sse_encode_bool(fast, serializer);
+          sse_encode_String(tokenizerName, serializer);
+          sse_encode_String(indexOption, serializer);
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 9)!;
+        },
+        codec: SseCodec(
+          decodeSuccessData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder,
+          decodeErrorData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError,
+        ),
+        constMeta: kCrateApiSchemabuilderSchemaBuilderAddTextFieldConstMeta,
+        argValues: [that, name, stored, fast, tokenizerName, indexOption],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiSchemabuilderSchemaBuilderAddTextFieldConstMeta =>
+      const TaskConstMeta(
+        debugName: "SchemaBuilder_add_text_field",
+        argNames: [
+          "that",
+          "name",
+          "stored",
+          "fast",
+          "tokenizerName",
+          "indexOption",
+        ],
+      );
+
+  @override
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderAddUnsignedField({
+    required SchemaBuilder that,
+    required String name,
+    required bool stored,
+    required bool indexed,
+    required bool fast,
+  }) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
+            that,
+            serializer,
+          );
+          sse_encode_String(name, serializer);
+          sse_encode_bool(stored, serializer);
+          sse_encode_bool(indexed, serializer);
+          sse_encode_bool(fast, serializer);
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 10)!;
+        },
+        codec: SseCodec(
+          decodeSuccessData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder,
+          decodeErrorData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError,
+        ),
+        constMeta: kCrateApiSchemabuilderSchemaBuilderAddUnsignedFieldConstMeta,
+        argValues: [that, name, stored, indexed, fast],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta
+  get kCrateApiSchemabuilderSchemaBuilderAddUnsignedFieldConstMeta =>
+      const TaskConstMeta(
+        debugName: "SchemaBuilder_add_unsigned_field",
+        argNames: ["that", "name", "stored", "indexed", "fast"],
+      );
+
+  @override
+  Schema crateApiSchemabuilderSchemaBuilderBuild({
+    required SchemaBuilder that,
+  }) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
             that,
             serializer,
           );
@@ -615,133 +636,70 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         codec: SseCodec(
           decodeSuccessData:
               sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchema,
-          decodeErrorData: null,
+          decodeErrorData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError,
         ),
-        constMeta: kCrateApiSimpleMySchemaBuilderBuildConstMeta,
+        constMeta: kCrateApiSchemabuilderSchemaBuilderBuildConstMeta,
         argValues: [that],
         apiImpl: this,
       ),
     );
   }
 
-  TaskConstMeta get kCrateApiSimpleMySchemaBuilderBuildConstMeta =>
-      const TaskConstMeta(
-        debugName: "MySchemaBuilder_build",
-        argNames: ["that"],
-      );
+  TaskConstMeta get kCrateApiSchemabuilderSchemaBuilderBuildConstMeta =>
+      const TaskConstMeta(debugName: "SchemaBuilder_build", argNames: ["that"]);
 
   @override
-  MySchemaBuilder crateApiSimpleMySchemaBuilderNew() {
-    return handler.executeSync(
-      SyncTask(
-        callFfi: () {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 12)!;
-        },
-        codec: SseCodec(
-          decodeSuccessData:
-              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder,
-          decodeErrorData: null,
-        ),
-        constMeta: kCrateApiSimpleMySchemaBuilderNewConstMeta,
-        argValues: [],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateApiSimpleMySchemaBuilderNewConstMeta =>
-      const TaskConstMeta(debugName: "MySchemaBuilder_new", argNames: []);
-
-  @override
-  String crateApiSimpleGreet({required String name}) {
+  bool crateApiSchemabuilderSchemaBuilderIsValidFieldName({
+    required String name,
+  }) {
     return handler.executeSync(
       SyncTask(
         callFfi: () {
           final serializer = SseSerializer(generalizedFrbRustBinding);
           sse_encode_String(name, serializer);
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 13)!;
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 12)!;
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_String,
+          decodeSuccessData: sse_decode_bool,
           decodeErrorData: null,
         ),
-        constMeta: kCrateApiSimpleGreetConstMeta,
+        constMeta: kCrateApiSchemabuilderSchemaBuilderIsValidFieldNameConstMeta,
         argValues: [name],
         apiImpl: this,
       ),
     );
   }
 
-  TaskConstMeta get kCrateApiSimpleGreetConstMeta =>
-      const TaskConstMeta(debugName: "greet", argNames: ["name"]);
+  TaskConstMeta
+  get kCrateApiSchemabuilderSchemaBuilderIsValidFieldNameConstMeta =>
+      const TaskConstMeta(
+        debugName: "SchemaBuilder_is_valid_field_name",
+        argNames: ["name"],
+      );
 
   @override
-  Future<void> crateApiSimpleInitApp() {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
+  SchemaBuilder crateApiSchemabuilderSchemaBuilderNew() {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
           final serializer = SseSerializer(generalizedFrbRustBinding);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 14,
-            port: port_,
-          );
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 13)!;
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
+          decodeSuccessData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder,
           decodeErrorData: null,
         ),
-        constMeta: kCrateApiSimpleInitAppConstMeta,
+        constMeta: kCrateApiSchemabuilderSchemaBuilderNewConstMeta,
         argValues: [],
         apiImpl: this,
       ),
     );
   }
 
-  TaskConstMeta get kCrateApiSimpleInitAppConstMeta =>
-      const TaskConstMeta(debugName: "init_app", argNames: []);
-
-  RustArcIncrementStrongCountFnType
-  get rust_arc_increment_strong_count_IndexReader =>
-      wire.rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexReader;
-
-  RustArcDecrementStrongCountFnType
-  get rust_arc_decrement_strong_count_IndexReader =>
-      wire.rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexReader;
-
-  RustArcIncrementStrongCountFnType
-  get rust_arc_increment_strong_count_IndexWriter =>
-      wire.rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexWriter;
-
-  RustArcDecrementStrongCountFnType
-  get rust_arc_decrement_strong_count_IndexWriter =>
-      wire.rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexWriter;
-
-  RustArcIncrementStrongCountFnType
-  get rust_arc_increment_strong_count_MyIndex =>
-      wire.rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMyIndex;
-
-  RustArcDecrementStrongCountFnType
-  get rust_arc_decrement_strong_count_MyIndex =>
-      wire.rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMyIndex;
-
-  RustArcIncrementStrongCountFnType
-  get rust_arc_increment_strong_count_MySchemaBuilder =>
-      wire.rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder;
-
-  RustArcDecrementStrongCountFnType
-  get rust_arc_decrement_strong_count_MySchemaBuilder =>
-      wire.rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder;
-
-  RustArcIncrementStrongCountFnType
-  get rust_arc_increment_strong_count_Opstamp =>
-      wire.rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOpstamp;
-
-  RustArcDecrementStrongCountFnType
-  get rust_arc_decrement_strong_count_Opstamp =>
-      wire.rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOpstamp;
+  TaskConstMeta get kCrateApiSchemabuilderSchemaBuilderNewConstMeta =>
+      const TaskConstMeta(debugName: "SchemaBuilder_new", argNames: []);
 
   RustArcIncrementStrongCountFnType
   get rust_arc_increment_strong_count_Schema =>
@@ -752,71 +710,20 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       wire.rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchema;
 
   RustArcIncrementStrongCountFnType
-  get rust_arc_increment_strong_count_Searcher =>
-      wire.rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSearcher;
+  get rust_arc_increment_strong_count_SchemaBuilder =>
+      wire.rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder;
 
   RustArcDecrementStrongCountFnType
-  get rust_arc_decrement_strong_count_Searcher =>
-      wire.rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSearcher;
+  get rust_arc_decrement_strong_count_SchemaBuilder =>
+      wire.rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder;
 
   RustArcIncrementStrongCountFnType
-  get rust_arc_increment_strong_count_TantivyDocument =>
-      wire.rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyDocument;
+  get rust_arc_increment_strong_count_TantivyError =>
+      wire.rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError;
 
   RustArcDecrementStrongCountFnType
-  get rust_arc_decrement_strong_count_TantivyDocument =>
-      wire.rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyDocument;
-
-  @protected
-  AnyhowException dco_decode_AnyhowException(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return AnyhowException(raw as String);
-  }
-
-  @protected
-  IndexReader
-  dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexReader(
-    dynamic raw,
-  ) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return IndexReaderImpl.frbInternalDcoDecode(raw as List<dynamic>);
-  }
-
-  @protected
-  IndexWriter
-  dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexWriter(
-    dynamic raw,
-  ) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return IndexWriterImpl.frbInternalDcoDecode(raw as List<dynamic>);
-  }
-
-  @protected
-  MyIndex
-  dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMyIndex(
-    dynamic raw,
-  ) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return MyIndexImpl.frbInternalDcoDecode(raw as List<dynamic>);
-  }
-
-  @protected
-  MySchemaBuilder
-  dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder(
-    dynamic raw,
-  ) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return MySchemaBuilderImpl.frbInternalDcoDecode(raw as List<dynamic>);
-  }
-
-  @protected
-  Opstamp
-  dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOpstamp(
-    dynamic raw,
-  ) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return OpstampImpl.frbInternalDcoDecode(raw as List<dynamic>);
-  }
+  get rust_arc_decrement_strong_count_TantivyError =>
+      wire.rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError;
 
   @protected
   Schema
@@ -828,102 +735,30 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  Searcher
-  dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSearcher(
+  SchemaBuilder
+  dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
     dynamic raw,
   ) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return SearcherImpl.frbInternalDcoDecode(raw as List<dynamic>);
+    return SchemaBuilderImpl.frbInternalDcoDecode(raw as List<dynamic>);
   }
 
   @protected
-  TantivyDocument
-  dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyDocument(
+  TantivyError
+  dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError(
     dynamic raw,
   ) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return TantivyDocumentImpl.frbInternalDcoDecode(raw as List<dynamic>);
+    return TantivyErrorImpl.frbInternalDcoDecode(raw as List<dynamic>);
   }
 
   @protected
-  MySchemaBuilder
-  dco_decode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder(
+  SchemaBuilder
+  dco_decode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
     dynamic raw,
   ) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return MySchemaBuilderImpl.frbInternalDcoDecode(raw as List<dynamic>);
-  }
-
-  @protected
-  IndexReader
-  dco_decode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexReader(
-    dynamic raw,
-  ) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return IndexReaderImpl.frbInternalDcoDecode(raw as List<dynamic>);
-  }
-
-  @protected
-  IndexWriter
-  dco_decode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexWriter(
-    dynamic raw,
-  ) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return IndexWriterImpl.frbInternalDcoDecode(raw as List<dynamic>);
-  }
-
-  @protected
-  MyIndex
-  dco_decode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMyIndex(
-    dynamic raw,
-  ) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return MyIndexImpl.frbInternalDcoDecode(raw as List<dynamic>);
-  }
-
-  @protected
-  IndexReader
-  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexReader(
-    dynamic raw,
-  ) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return IndexReaderImpl.frbInternalDcoDecode(raw as List<dynamic>);
-  }
-
-  @protected
-  IndexWriter
-  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexWriter(
-    dynamic raw,
-  ) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return IndexWriterImpl.frbInternalDcoDecode(raw as List<dynamic>);
-  }
-
-  @protected
-  MyIndex
-  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMyIndex(
-    dynamic raw,
-  ) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return MyIndexImpl.frbInternalDcoDecode(raw as List<dynamic>);
-  }
-
-  @protected
-  MySchemaBuilder
-  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder(
-    dynamic raw,
-  ) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return MySchemaBuilderImpl.frbInternalDcoDecode(raw as List<dynamic>);
-  }
-
-  @protected
-  Opstamp
-  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOpstamp(
-    dynamic raw,
-  ) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return OpstampImpl.frbInternalDcoDecode(raw as List<dynamic>);
+    return SchemaBuilderImpl.frbInternalDcoDecode(raw as List<dynamic>);
   }
 
   @protected
@@ -936,21 +771,21 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  Searcher
-  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSearcher(
+  SchemaBuilder
+  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
     dynamic raw,
   ) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return SearcherImpl.frbInternalDcoDecode(raw as List<dynamic>);
+    return SchemaBuilderImpl.frbInternalDcoDecode(raw as List<dynamic>);
   }
 
   @protected
-  TantivyDocument
-  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyDocument(
+  TantivyError
+  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError(
     dynamic raw,
   ) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return TantivyDocumentImpl.frbInternalDcoDecode(raw as List<dynamic>);
+    return TantivyErrorImpl.frbInternalDcoDecode(raw as List<dynamic>);
   }
 
   @protected
@@ -963,18 +798,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   bool dco_decode_bool(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as bool;
-  }
-
-  @protected
-  int dco_decode_i_32(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw as int;
-  }
-
-  @protected
-  IndexRecordOption dco_decode_index_record_option(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return IndexRecordOption.values[raw as int];
   }
 
   @protected
@@ -1002,73 +825,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  AnyhowException sse_decode_AnyhowException(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var inner = sse_decode_String(deserializer);
-    return AnyhowException(inner);
-  }
-
-  @protected
-  IndexReader
-  sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexReader(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return IndexReaderImpl.frbInternalSseDecode(
-      sse_decode_usize(deserializer),
-      sse_decode_i_32(deserializer),
-    );
-  }
-
-  @protected
-  IndexWriter
-  sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexWriter(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return IndexWriterImpl.frbInternalSseDecode(
-      sse_decode_usize(deserializer),
-      sse_decode_i_32(deserializer),
-    );
-  }
-
-  @protected
-  MyIndex
-  sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMyIndex(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return MyIndexImpl.frbInternalSseDecode(
-      sse_decode_usize(deserializer),
-      sse_decode_i_32(deserializer),
-    );
-  }
-
-  @protected
-  MySchemaBuilder
-  sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return MySchemaBuilderImpl.frbInternalSseDecode(
-      sse_decode_usize(deserializer),
-      sse_decode_i_32(deserializer),
-    );
-  }
-
-  @protected
-  Opstamp
-  sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOpstamp(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return OpstampImpl.frbInternalSseDecode(
-      sse_decode_usize(deserializer),
-      sse_decode_i_32(deserializer),
-    );
-  }
-
-  @protected
   Schema
   sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchema(
     SseDeserializer deserializer,
@@ -1081,132 +837,36 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  Searcher
-  sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSearcher(
+  SchemaBuilder
+  sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
     SseDeserializer deserializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    return SearcherImpl.frbInternalSseDecode(
+    return SchemaBuilderImpl.frbInternalSseDecode(
       sse_decode_usize(deserializer),
       sse_decode_i_32(deserializer),
     );
   }
 
   @protected
-  TantivyDocument
-  sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyDocument(
+  TantivyError
+  sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError(
     SseDeserializer deserializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    return TantivyDocumentImpl.frbInternalSseDecode(
+    return TantivyErrorImpl.frbInternalSseDecode(
       sse_decode_usize(deserializer),
       sse_decode_i_32(deserializer),
     );
   }
 
   @protected
-  MySchemaBuilder
-  sse_decode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder(
+  SchemaBuilder
+  sse_decode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
     SseDeserializer deserializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    return MySchemaBuilderImpl.frbInternalSseDecode(
-      sse_decode_usize(deserializer),
-      sse_decode_i_32(deserializer),
-    );
-  }
-
-  @protected
-  IndexReader
-  sse_decode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexReader(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return IndexReaderImpl.frbInternalSseDecode(
-      sse_decode_usize(deserializer),
-      sse_decode_i_32(deserializer),
-    );
-  }
-
-  @protected
-  IndexWriter
-  sse_decode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexWriter(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return IndexWriterImpl.frbInternalSseDecode(
-      sse_decode_usize(deserializer),
-      sse_decode_i_32(deserializer),
-    );
-  }
-
-  @protected
-  MyIndex
-  sse_decode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMyIndex(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return MyIndexImpl.frbInternalSseDecode(
-      sse_decode_usize(deserializer),
-      sse_decode_i_32(deserializer),
-    );
-  }
-
-  @protected
-  IndexReader
-  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexReader(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return IndexReaderImpl.frbInternalSseDecode(
-      sse_decode_usize(deserializer),
-      sse_decode_i_32(deserializer),
-    );
-  }
-
-  @protected
-  IndexWriter
-  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexWriter(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return IndexWriterImpl.frbInternalSseDecode(
-      sse_decode_usize(deserializer),
-      sse_decode_i_32(deserializer),
-    );
-  }
-
-  @protected
-  MyIndex
-  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMyIndex(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return MyIndexImpl.frbInternalSseDecode(
-      sse_decode_usize(deserializer),
-      sse_decode_i_32(deserializer),
-    );
-  }
-
-  @protected
-  MySchemaBuilder
-  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return MySchemaBuilderImpl.frbInternalSseDecode(
-      sse_decode_usize(deserializer),
-      sse_decode_i_32(deserializer),
-    );
-  }
-
-  @protected
-  Opstamp
-  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOpstamp(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return OpstampImpl.frbInternalSseDecode(
+    return SchemaBuilderImpl.frbInternalSseDecode(
       sse_decode_usize(deserializer),
       sse_decode_i_32(deserializer),
     );
@@ -1225,24 +885,24 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  Searcher
-  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSearcher(
+  SchemaBuilder
+  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
     SseDeserializer deserializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    return SearcherImpl.frbInternalSseDecode(
+    return SchemaBuilderImpl.frbInternalSseDecode(
       sse_decode_usize(deserializer),
       sse_decode_i_32(deserializer),
     );
   }
 
   @protected
-  TantivyDocument
-  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyDocument(
+  TantivyError
+  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError(
     SseDeserializer deserializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    return TantivyDocumentImpl.frbInternalSseDecode(
+    return TantivyErrorImpl.frbInternalSseDecode(
       sse_decode_usize(deserializer),
       sse_decode_i_32(deserializer),
     );
@@ -1259,21 +919,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   bool sse_decode_bool(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return deserializer.buffer.getUint8() != 0;
-  }
-
-  @protected
-  int sse_decode_i_32(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return deserializer.buffer.getInt32();
-  }
-
-  @protected
-  IndexRecordOption sse_decode_index_record_option(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var inner = sse_decode_i_32(deserializer);
-    return IndexRecordOption.values[inner];
   }
 
   @protected
@@ -1301,77 +946,9 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  void sse_encode_AnyhowException(
-    AnyhowException self,
-    SseSerializer serializer,
-  ) {
+  int sse_decode_i_32(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_String(self.message, serializer);
-  }
-
-  @protected
-  void
-  sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexReader(
-    IndexReader self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_usize(
-      (self as IndexReaderImpl).frbInternalSseEncode(move: true),
-      serializer,
-    );
-  }
-
-  @protected
-  void
-  sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexWriter(
-    IndexWriter self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_usize(
-      (self as IndexWriterImpl).frbInternalSseEncode(move: true),
-      serializer,
-    );
-  }
-
-  @protected
-  void
-  sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMyIndex(
-    MyIndex self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_usize(
-      (self as MyIndexImpl).frbInternalSseEncode(move: true),
-      serializer,
-    );
-  }
-
-  @protected
-  void
-  sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder(
-    MySchemaBuilder self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_usize(
-      (self as MySchemaBuilderImpl).frbInternalSseEncode(move: true),
-      serializer,
-    );
-  }
-
-  @protected
-  void
-  sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOpstamp(
-    Opstamp self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_usize(
-      (self as OpstampImpl).frbInternalSseEncode(move: true),
-      serializer,
-    );
+    return deserializer.buffer.getInt32();
   }
 
   @protected
@@ -1389,143 +966,39 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @protected
   void
-  sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSearcher(
-    Searcher self,
+  sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
+    SchemaBuilder self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_usize(
-      (self as SearcherImpl).frbInternalSseEncode(move: true),
+      (self as SchemaBuilderImpl).frbInternalSseEncode(move: true),
       serializer,
     );
   }
 
   @protected
   void
-  sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyDocument(
-    TantivyDocument self,
+  sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError(
+    TantivyError self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_usize(
-      (self as TantivyDocumentImpl).frbInternalSseEncode(move: true),
+      (self as TantivyErrorImpl).frbInternalSseEncode(move: true),
       serializer,
     );
   }
 
   @protected
   void
-  sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder(
-    MySchemaBuilder self,
+  sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
+    SchemaBuilder self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_usize(
-      (self as MySchemaBuilderImpl).frbInternalSseEncode(move: false),
-      serializer,
-    );
-  }
-
-  @protected
-  void
-  sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexReader(
-    IndexReader self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_usize(
-      (self as IndexReaderImpl).frbInternalSseEncode(move: false),
-      serializer,
-    );
-  }
-
-  @protected
-  void
-  sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexWriter(
-    IndexWriter self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_usize(
-      (self as IndexWriterImpl).frbInternalSseEncode(move: false),
-      serializer,
-    );
-  }
-
-  @protected
-  void
-  sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMyIndex(
-    MyIndex self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_usize(
-      (self as MyIndexImpl).frbInternalSseEncode(move: false),
-      serializer,
-    );
-  }
-
-  @protected
-  void
-  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexReader(
-    IndexReader self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_usize(
-      (self as IndexReaderImpl).frbInternalSseEncode(move: null),
-      serializer,
-    );
-  }
-
-  @protected
-  void
-  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIndexWriter(
-    IndexWriter self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_usize(
-      (self as IndexWriterImpl).frbInternalSseEncode(move: null),
-      serializer,
-    );
-  }
-
-  @protected
-  void
-  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMyIndex(
-    MyIndex self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_usize(
-      (self as MyIndexImpl).frbInternalSseEncode(move: null),
-      serializer,
-    );
-  }
-
-  @protected
-  void
-  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerMySchemaBuilder(
-    MySchemaBuilder self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_usize(
-      (self as MySchemaBuilderImpl).frbInternalSseEncode(move: null),
-      serializer,
-    );
-  }
-
-  @protected
-  void
-  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOpstamp(
-    Opstamp self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_usize(
-      (self as OpstampImpl).frbInternalSseEncode(move: null),
+      (self as SchemaBuilderImpl).frbInternalSseEncode(move: false),
       serializer,
     );
   }
@@ -1545,26 +1018,26 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @protected
   void
-  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSearcher(
-    Searcher self,
+  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerSchemaBuilder(
+    SchemaBuilder self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_usize(
-      (self as SearcherImpl).frbInternalSseEncode(move: null),
+      (self as SchemaBuilderImpl).frbInternalSseEncode(move: null),
       serializer,
     );
   }
 
   @protected
   void
-  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyDocument(
-    TantivyDocument self,
+  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerTantivyError(
+    TantivyError self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_usize(
-      (self as TantivyDocumentImpl).frbInternalSseEncode(move: null),
+      (self as TantivyErrorImpl).frbInternalSseEncode(move: null),
       serializer,
     );
   }
@@ -1579,21 +1052,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   void sse_encode_bool(bool self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     serializer.buffer.putUint8(self ? 1 : 0);
-  }
-
-  @protected
-  void sse_encode_i_32(int self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    serializer.buffer.putInt32(self);
-  }
-
-  @protected
-  void sse_encode_index_record_option(
-    IndexRecordOption self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_i_32(self.index, serializer);
   }
 
   @protected
@@ -1622,182 +1080,320 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     serializer.buffer.putBigUint64(self);
   }
+
+  @protected
+  void sse_encode_i_32(int self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    serializer.buffer.putInt32(self);
+  }
 }
 
 @sealed
-class IndexReaderImpl extends RustOpaque implements IndexReader {
+class SchemaBuilderImpl extends RustOpaque implements SchemaBuilder {
   // Not to be used by end users
-  IndexReaderImpl.frbInternalDcoDecode(List<dynamic> wire)
+  SchemaBuilderImpl.frbInternalDcoDecode(List<dynamic> wire)
     : super.frbInternalDcoDecode(wire, _kStaticData);
 
   // Not to be used by end users
-  IndexReaderImpl.frbInternalSseDecode(BigInt ptr, int externalSizeOnNative)
+  SchemaBuilderImpl.frbInternalSseDecode(BigInt ptr, int externalSizeOnNative)
     : super.frbInternalSseDecode(ptr, externalSizeOnNative, _kStaticData);
 
   static final _kStaticData = RustArcStaticData(
     rustArcIncrementStrongCount:
-        RustLib.instance.api.rust_arc_increment_strong_count_IndexReader,
+        RustLib.instance.api.rust_arc_increment_strong_count_SchemaBuilder,
     rustArcDecrementStrongCount:
-        RustLib.instance.api.rust_arc_decrement_strong_count_IndexReader,
+        RustLib.instance.api.rust_arc_decrement_strong_count_SchemaBuilder,
     rustArcDecrementStrongCountPtr:
-        RustLib.instance.api.rust_arc_decrement_strong_count_IndexReaderPtr,
+        RustLib.instance.api.rust_arc_decrement_strong_count_SchemaBuilderPtr,
   );
 
-  Future<Searcher> searcher() =>
-      RustLib.instance.api.crateApiSimpleIndexReaderSearcher(that: this);
-}
-
-@sealed
-class IndexWriterImpl extends RustOpaque implements IndexWriter {
-  // Not to be used by end users
-  IndexWriterImpl.frbInternalDcoDecode(List<dynamic> wire)
-    : super.frbInternalDcoDecode(wire, _kStaticData);
-
-  // Not to be used by end users
-  IndexWriterImpl.frbInternalSseDecode(BigInt ptr, int externalSizeOnNative)
-    : super.frbInternalSseDecode(ptr, externalSizeOnNative, _kStaticData);
-
-  static final _kStaticData = RustArcStaticData(
-    rustArcIncrementStrongCount:
-        RustLib.instance.api.rust_arc_increment_strong_count_IndexWriter,
-    rustArcDecrementStrongCount:
-        RustLib.instance.api.rust_arc_decrement_strong_count_IndexWriter,
-    rustArcDecrementStrongCountPtr:
-        RustLib.instance.api.rust_arc_decrement_strong_count_IndexWriterPtr,
-  );
-
-  Future<Opstamp> addDocument({required TantivyDocument document}) => RustLib
-      .instance
-      .api
-      .crateApiSimpleIndexWriterAddDocument(that: this, document: document);
-}
-
-@sealed
-class MyIndexImpl extends RustOpaque implements MyIndex {
-  // Not to be used by end users
-  MyIndexImpl.frbInternalDcoDecode(List<dynamic> wire)
-    : super.frbInternalDcoDecode(wire, _kStaticData);
-
-  // Not to be used by end users
-  MyIndexImpl.frbInternalSseDecode(BigInt ptr, int externalSizeOnNative)
-    : super.frbInternalSseDecode(ptr, externalSizeOnNative, _kStaticData);
-
-  static final _kStaticData = RustArcStaticData(
-    rustArcIncrementStrongCount:
-        RustLib.instance.api.rust_arc_increment_strong_count_MyIndex,
-    rustArcDecrementStrongCount:
-        RustLib.instance.api.rust_arc_decrement_strong_count_MyIndex,
-    rustArcDecrementStrongCountPtr:
-        RustLib.instance.api.rust_arc_decrement_strong_count_MyIndexPtr,
-  );
-
-  IndexReader reader() =>
-      RustLib.instance.api.crateApiSimpleMyIndexReader(that: this);
-
-  IndexWriter writer({required BigInt heapSize, required BigInt numThreads}) =>
-      RustLib.instance.api.crateApiSimpleMyIndexWriter(
-        that: this,
-        heapSize: heapSize,
-        numThreads: numThreads,
-      );
-}
-
-@sealed
-class MySchemaBuilderImpl extends RustOpaque implements MySchemaBuilder {
-  // Not to be used by end users
-  MySchemaBuilderImpl.frbInternalDcoDecode(List<dynamic> wire)
-    : super.frbInternalDcoDecode(wire, _kStaticData);
-
-  // Not to be used by end users
-  MySchemaBuilderImpl.frbInternalSseDecode(BigInt ptr, int externalSizeOnNative)
-    : super.frbInternalSseDecode(ptr, externalSizeOnNative, _kStaticData);
-
-  static final _kStaticData = RustArcStaticData(
-    rustArcIncrementStrongCount:
-        RustLib.instance.api.rust_arc_increment_strong_count_MySchemaBuilder,
-    rustArcDecrementStrongCount:
-        RustLib.instance.api.rust_arc_decrement_strong_count_MySchemaBuilder,
-    rustArcDecrementStrongCountPtr:
-        RustLib.instance.api.rust_arc_decrement_strong_count_MySchemaBuilderPtr,
-  );
-
-  Future<void> addBoolField({
+  /// Add a new boolean field to the schema.
+  ///
+  /// Args:
+  ///     name (str): The name of the field.
+  ///     stored (bool, optional): If true sets the field as stored, the
+  ///         content of the field can be later restored from a Searcher.
+  ///         Defaults to False.
+  ///     indexed (bool, optional): If true sets the field to be indexed.
+  ///     fast (bool, optional): Set the numeric options as a fast field. A
+  ///         fast field is a column-oriented fashion storage for tantivy.
+  ///         It is designed for the fast random access of some document
+  ///         fields given a document id.
+  ///
+  /// Returns the associated field handle.
+  /// Raises a ValueError if there was an error with the field creation.
+  SchemaBuilder addBooleanField({
     required String name,
     required bool stored,
-    required bool fast,
     required bool indexed,
-  }) => RustLib.instance.api.crateApiSimpleMySchemaBuilderAddBoolField(
+    required bool fast,
+  }) => RustLib.instance.api.crateApiSchemabuilderSchemaBuilderAddBooleanField(
     that: this,
     name: name,
     stored: stored,
-    fast: fast,
     indexed: indexed,
+    fast: fast,
   );
 
-  Future<void> addFacetField({required String name}) => RustLib.instance.api
-      .crateApiSimpleMySchemaBuilderAddFacetField(that: this, name: name);
-
-  Future<void> addFloatField({
+  /// Add a fast bytes field to the schema.
+  ///
+  /// Args:
+  ///     name (str): The name of the field.
+  ///     stored (bool, optional): If true sets the field as stored, the
+  ///         content of the field can be later restored from a Searcher.
+  ///         Defaults to False.
+  ///     indexed (bool, optional): If true sets the field to be indexed.
+  ///     fast (bool, optional): Set the bytes options as a fast field. A fast
+  ///         field is a column-oriented fashion storage for tantivy. It is
+  ///         designed for the fast random access of some document fields
+  ///         given a document id.
+  SchemaBuilder addBytesField({
     required String name,
     required bool stored,
-    required bool fast,
     required bool indexed,
-  }) => RustLib.instance.api.crateApiSimpleMySchemaBuilderAddFloatField(
+    required bool fast,
+  }) => RustLib.instance.api.crateApiSchemabuilderSchemaBuilderAddBytesField(
     that: this,
     name: name,
     stored: stored,
-    fast: fast,
     indexed: indexed,
+    fast: fast,
   );
 
-  Future<void> addIntegerField({
+  /// Add a new date field to the schema.
+  ///
+  /// Args:
+  ///     name (str): The name of the field.
+  ///     stored (bool, optional): If true sets the field as stored, the
+  ///         content of the field can be later restored from a Searcher.
+  ///         Defaults to False.
+  ///     indexed (bool, optional): If true sets the field to be indexed.
+  ///     fast (bool, optional): Set the date options as a fast field. A fast
+  ///         field is a column-oriented fashion storage for tantivy. It is
+  ///         designed for the fast random access of some document fields
+  ///         given a document id.
+  ///
+  /// Returns the associated field handle.
+  /// Raises a ValueError if there was an error with the field creation.
+  SchemaBuilder addDateField({
     required String name,
     required bool stored,
-    required bool fast,
     required bool indexed,
-  }) => RustLib.instance.api.crateApiSimpleMySchemaBuilderAddIntegerField(
+    required bool fast,
+  }) => RustLib.instance.api.crateApiSchemabuilderSchemaBuilderAddDateField(
     that: this,
     name: name,
     stored: stored,
-    fast: fast,
     indexed: indexed,
+    fast: fast,
   );
 
-  Future<void> addTextField({
+  /// Add a Facet field to the schema.
+  /// Args:
+  ///     name (str): The name of the field.
+  SchemaBuilder addFacetField({required String name}) => RustLib.instance.api
+      .crateApiSchemabuilderSchemaBuilderAddFacetField(that: this, name: name);
+
+  /// Add a new float field to the schema.
+  ///
+  /// Args:
+  ///     name (str): The name of the field.
+  ///     stored (bool, optional): If true sets the field as stored, the
+  ///         content of the field can be later restored from a Searcher.
+  ///         Defaults to False.
+  ///     indexed (bool, optional): If true sets the field to be indexed.
+  ///     fast (bool, optional): Set the numeric options as a fast field. A
+  ///         fast field is a column-oriented fashion storage for tantivy.
+  ///         It is designed for the fast random access of some document
+  ///         fields given a document id.
+  ///
+  /// Returns the associated field handle.
+  /// Raises a ValueError if there was an error with the field creation.
+  SchemaBuilder addFloatField({
     required String name,
     required bool stored,
-    required IndexRecordOption indexOption,
+    required bool indexed,
+    required bool fast,
+  }) => RustLib.instance.api.crateApiSchemabuilderSchemaBuilderAddFloatField(
+    that: this,
+    name: name,
+    stored: stored,
+    indexed: indexed,
+    fast: fast,
+  );
+
+  /// Add a new signed integer field to the schema.
+  ///
+  /// Args:
+  ///     name (str): The name of the field.
+  ///     stored (bool, optional): If true sets the field as stored, the
+  ///         content of the field can be later restored from a Searcher.
+  ///         Defaults to False.
+  ///     indexed (bool, optional): If true sets the field to be indexed.
+  ///     fast (bool, optional): Set the numeric options as a fast field. A
+  ///         fast field is a column-oriented fashion storage for tantivy.
+  ///         It is designed for the fast random access of some document
+  ///         fields given a document id.
+  ///
+  /// Returns the associated field handle.
+  /// Raises a ValueError if there was an error with the field creation.
+  SchemaBuilder addIntegerField({
+    required String name,
+    required bool stored,
+    required bool indexed,
+    required bool fast,
+  }) => RustLib.instance.api.crateApiSchemabuilderSchemaBuilderAddIntegerField(
+    that: this,
+    name: name,
+    stored: stored,
+    indexed: indexed,
+    fast: fast,
+  );
+
+  /// Add an IP address field to the schema.
+  ///
+  /// Args:
+  ///     name (str): The name of the field.
+  ///     stored (bool, optional): If true sets the field as stored, the
+  ///         content of the field can be later restored from a Searcher.
+  ///         Defaults to False.
+  ///     indexed (bool, optional): If true sets the field to be indexed.
+  ///     fast (bool, optional): Set the IP address options as a fast field. A
+  ///         fast field is a column-oriented fashion storage for tantivy. It
+  ///         is designed for the fast random access of some document fields
+  ///         given a document id.
+  SchemaBuilder addIpAddrField({
+    required String name,
+    required bool stored,
+    required bool indexed,
+    required bool fast,
+  }) => RustLib.instance.api.crateApiSchemabuilderSchemaBuilderAddIpAddrField(
+    that: this,
+    name: name,
+    stored: stored,
+    indexed: indexed,
+    fast: fast,
+  );
+
+  /// Add a new json field to the schema.
+  ///
+  /// Args:
+  ///     name (str): the name of the field.
+  ///     stored (bool, optional): If true sets the field as stored, the
+  ///         content of the field can be later restored from a Searcher.
+  ///         Defaults to False.
+  ///     fast (bool, optional): Set the text options as a fast field. A
+  ///         fast field is a column-oriented fashion storage for tantivy.
+  ///         Text fast fields will have the term ids stored in the fast
+  ///         field. The fast field will be a multivalued fast field.
+  ///         It is recommended to use the "raw" tokenizer, since it will
+  ///         store the original text unchanged. The "default" tokenizer will
+  ///         store the terms as lower case and this will be reflected in the
+  ///         dictionary.
+  ///     tokenizer_name (str, optional): The name of the tokenizer that
+  ///         should be used to process the field. Defaults to 'default'
+  ///     index_option (str, optional): Sets which information should be
+  ///         indexed with the tokens. Can be one of 'position', 'freq' or
+  ///         'basic'. Defaults to 'position'. The 'basic' index_option
+  ///         records only the document ID, the 'freq' option records the
+  ///         document id and the term frequency, while the 'position' option
+  ///         records the document id, term frequency and the positions of
+  ///         the term occurrences in the document.
+  ///
+  /// Returns the associated field handle.
+  /// Raises a ValueError if there was an error with the field creation.
+  SchemaBuilder addJsonField({
+    required String name,
+    required bool stored,
+    required bool fast,
     required String tokenizerName,
-  }) => RustLib.instance.api.crateApiSimpleMySchemaBuilderAddTextField(
+    required String indexOption,
+  }) => RustLib.instance.api.crateApiSchemabuilderSchemaBuilderAddJsonField(
     that: this,
     name: name,
     stored: stored,
-    indexOption: indexOption,
+    fast: fast,
     tokenizerName: tokenizerName,
+    indexOption: indexOption,
   );
 
+  /// Add a new text field to the schema.
+  ///
+  /// Args:
+  ///     name (str): The name of the field.
+  ///     stored (bool, optional): If true sets the field as stored, the
+  ///         content of the field can be later restored from a Searcher.
+  ///         Defaults to False.
+  ///     fast (bool, optional): Set the text options as a fast field. A
+  ///         fast field is a column-oriented fashion storage for tantivy.
+  ///         Text fast fields will have the term ids stored in the fast
+  ///         field. The fast field will be a multivalued fast field.
+  ///         It is recommended to use the "raw" tokenizer, since it will
+  ///         store the original text unchanged. The "default" tokenizer will
+  ///         store the terms as lower case and this will be reflected in the
+  ///         dictionary.
+  ///     tokenizer_name (str, optional): The name of the tokenizer that
+  ///         should be used to process the field. Defaults to 'default'
+  ///     index_option (str, optional): Sets which information should be
+  ///         indexed with the tokens. Can be one of 'position', 'freq' or
+  ///         'basic'. Defaults to 'position'. The 'basic' index_option
+  ///         records only the document ID, the 'freq' option records the
+  ///         document id and the term frequency, while the 'position' option
+  ///         records the document id, term frequency and the positions of
+  ///         the term occurrences in the document.
+  ///
+  /// Returns the associated field handle.
+  /// Raises a ValueError if there was an error with the field creation.
+  SchemaBuilder addTextField({
+    required String name,
+    required bool stored,
+    required bool fast,
+    required String tokenizerName,
+    required String indexOption,
+  }) => RustLib.instance.api.crateApiSchemabuilderSchemaBuilderAddTextField(
+    that: this,
+    name: name,
+    stored: stored,
+    fast: fast,
+    tokenizerName: tokenizerName,
+    indexOption: indexOption,
+  );
+
+  /// Add a new unsigned integer field to the schema.
+  ///
+  /// Args:
+  ///     name (str): The name of the field.
+  ///     stored (bool, optional): If true sets the field as stored, the
+  ///         content of the field can be later restored from a Searcher.
+  ///         Defaults to False.
+  ///     indexed (bool, optional): If true sets the field to be indexed.
+  ///     fast (bool, optional): Set the numeric options as a fast field. A
+  ///         fast field is a column-oriented fashion storage for tantivy.
+  ///         It is designed for the fast random access of some document
+  ///         fields given a document id.
+  ///
+  /// Returns the associated field handle.
+  /// Raises a ValueError if there was an error with the field creation.
+  SchemaBuilder addUnsignedField({
+    required String name,
+    required bool stored,
+    required bool indexed,
+    required bool fast,
+  }) => RustLib.instance.api.crateApiSchemabuilderSchemaBuilderAddUnsignedField(
+    that: this,
+    name: name,
+    stored: stored,
+    indexed: indexed,
+    fast: fast,
+  );
+
+  /// Finalize the creation of a Schema.
+  ///
+  /// Returns a Schema object. After this is called the SchemaBuilder cannot
+  /// be used anymore.
+  ///
   Schema build() =>
-      RustLib.instance.api.crateApiSimpleMySchemaBuilderBuild(that: this);
-}
-
-@sealed
-class OpstampImpl extends RustOpaque implements Opstamp {
-  // Not to be used by end users
-  OpstampImpl.frbInternalDcoDecode(List<dynamic> wire)
-    : super.frbInternalDcoDecode(wire, _kStaticData);
-
-  // Not to be used by end users
-  OpstampImpl.frbInternalSseDecode(BigInt ptr, int externalSizeOnNative)
-    : super.frbInternalSseDecode(ptr, externalSizeOnNative, _kStaticData);
-
-  static final _kStaticData = RustArcStaticData(
-    rustArcIncrementStrongCount:
-        RustLib.instance.api.rust_arc_increment_strong_count_Opstamp,
-    rustArcDecrementStrongCount:
-        RustLib.instance.api.rust_arc_decrement_strong_count_Opstamp,
-    rustArcDecrementStrongCountPtr:
-        RustLib.instance.api.rust_arc_decrement_strong_count_OpstampPtr,
-  );
+      RustLib.instance.api.crateApiSchemabuilderSchemaBuilderBuild(that: this);
 }
 
 @sealed
@@ -1821,41 +1417,21 @@ class SchemaImpl extends RustOpaque implements Schema {
 }
 
 @sealed
-class SearcherImpl extends RustOpaque implements Searcher {
+class TantivyErrorImpl extends RustOpaque implements TantivyError {
   // Not to be used by end users
-  SearcherImpl.frbInternalDcoDecode(List<dynamic> wire)
+  TantivyErrorImpl.frbInternalDcoDecode(List<dynamic> wire)
     : super.frbInternalDcoDecode(wire, _kStaticData);
 
   // Not to be used by end users
-  SearcherImpl.frbInternalSseDecode(BigInt ptr, int externalSizeOnNative)
+  TantivyErrorImpl.frbInternalSseDecode(BigInt ptr, int externalSizeOnNative)
     : super.frbInternalSseDecode(ptr, externalSizeOnNative, _kStaticData);
 
   static final _kStaticData = RustArcStaticData(
     rustArcIncrementStrongCount:
-        RustLib.instance.api.rust_arc_increment_strong_count_Searcher,
+        RustLib.instance.api.rust_arc_increment_strong_count_TantivyError,
     rustArcDecrementStrongCount:
-        RustLib.instance.api.rust_arc_decrement_strong_count_Searcher,
+        RustLib.instance.api.rust_arc_decrement_strong_count_TantivyError,
     rustArcDecrementStrongCountPtr:
-        RustLib.instance.api.rust_arc_decrement_strong_count_SearcherPtr,
-  );
-}
-
-@sealed
-class TantivyDocumentImpl extends RustOpaque implements TantivyDocument {
-  // Not to be used by end users
-  TantivyDocumentImpl.frbInternalDcoDecode(List<dynamic> wire)
-    : super.frbInternalDcoDecode(wire, _kStaticData);
-
-  // Not to be used by end users
-  TantivyDocumentImpl.frbInternalSseDecode(BigInt ptr, int externalSizeOnNative)
-    : super.frbInternalSseDecode(ptr, externalSizeOnNative, _kStaticData);
-
-  static final _kStaticData = RustArcStaticData(
-    rustArcIncrementStrongCount:
-        RustLib.instance.api.rust_arc_increment_strong_count_TantivyDocument,
-    rustArcDecrementStrongCount:
-        RustLib.instance.api.rust_arc_decrement_strong_count_TantivyDocument,
-    rustArcDecrementStrongCountPtr:
-        RustLib.instance.api.rust_arc_decrement_strong_count_TantivyDocumentPtr,
+        RustLib.instance.api.rust_arc_decrement_strong_count_TantivyErrorPtr,
   );
 }
