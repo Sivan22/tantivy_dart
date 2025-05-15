@@ -39,7 +39,14 @@ impl From<FieldType> for tv::schema::Type {
 /// provided.
 
 
-pub(crate) struct Schema {
+pub struct Schema {
     pub(crate) inner: tv_schema,
+}
+
+impl  Schema {
+    pub fn get_field(&self, name: &str) -> Result<tv::schema::Field, tv::TantivyError> {
+        self.inner.get_field(name)
+    }
+    
 }
 

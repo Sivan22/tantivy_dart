@@ -248,6 +248,3 @@ abstract class SchemaBuilder implements RustOpaqueInterface {
   factory SchemaBuilder() =>
       RustLib.instance.api.crateApiSchemabuilderSchemaBuilderNew();
 }
-
-// Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<TantivyError>>
-abstract class TantivyError implements RustOpaqueInterface {}

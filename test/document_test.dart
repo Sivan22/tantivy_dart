@@ -1,14 +1,12 @@
-# tantivy_dart
-
-Dart bindings for tantivy - full text search library written in rust.
-
-## Usage
-
-```dart
+import 'package:integration_test/integration_test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:tantivy_dart/tantivy_dart.dart';
 
- final schemaBuilder = SchemaBuilder();
-
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  setUpAll(() async => await RustLib.init());
+  test('Document test', () async {
+    final schemaBuilder = SchemaBuilder();
     schemaBuilder.addTextField(
       name: "title",
       stored: true,
@@ -25,9 +23,5 @@ import 'package:tantivy_dart/tantivy_dart.dart';
     final schema = schemaBuilder.build();
 
     final doc = Document({"title": "Hello world", "price": 10}, schema);
-
-```
-
-## Bridge
-
-this package is a is using the [Flutter Rust Bridge](https://github.com/fzyzcjy/flutter_rust_bridge) to bridge between rust and dart.
+  });
+}
